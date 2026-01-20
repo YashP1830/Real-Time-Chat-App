@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import { generateToken } from "../lib/utils.js";
 import { SendWelcomeEmail } from "../email/emailHandelers.js";
 import "dotenv/config"
+import cloudinary from "../lib/cloudinary.js";
 export const signup=async (req, res) => {
    const {fullName,email,password}=req.body
     try {
@@ -67,6 +68,10 @@ export const signup=async (req, res) => {
 
  export const login=async (req,res) =>{
     const {email,password}= req.body
+    if(!email || !password)
+    {
+        return res.status(400).json({meassage:"Please enter and E-mail and Password"})
+    }
     try {
         const user=await User.findOne({email})
         if(!user) return res.status(400).json({message:"Invalid Credential"})
@@ -93,3 +98,23 @@ export const signup=async (req, res) => {
         res.cookie("jwt","",{maxAge:0})
         res.status(200).json({message:"The user is Logout Successfully"})
  }
+
+ export const updateprofile=async (res,req)=>{
+    try {
+        const {profilepic}=req.body
+        if(!profilepic) return res.status(400).json({message:"Profile pic is required"})
+        
+        const userId=req.user._id
+        const uploadResponse=await cloudinary.uploader(profilepic)
+
+        const UpdatedUSER=await User.findByIdAndUpdate(userId,{profilepic:uploadResponse.secure_url},{new:true})
+
+        res.status(200).json(UpdatedUSER)
+
+    } catch (error) {
+        console.error("Error in Profiel Updating controller",error)
+        return res.status(500).json({message:"Internal Server Error"})
+    }
+ }
+
+ 
