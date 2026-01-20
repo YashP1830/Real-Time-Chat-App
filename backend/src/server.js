@@ -12,9 +12,10 @@ const PORT=process.env.PORT || 3000
 
 const __dirname=path.resolve()
 app.use(express.json())
+app.use(cookieParser())
 app.use("/api/auth",authRoutes)
 app.use("/api/message",messageRoutes)
-app.use(cookieParser())
+
 app.listen(PORT,()=>{
     console.log("The server is listening at port 3000")
     connectDB()
