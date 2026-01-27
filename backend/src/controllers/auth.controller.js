@@ -25,7 +25,9 @@ export const signup=async (req, res) => {
     
         const user=await User.findOne({email});
     
-        if(user) res.status(400).json({message:"The Email already exist"})
+        if(user){
+            return res.status(400).json({message:"The Email already exist"})
+        } 
     
          const salt=await bcrypt.genSalt(10)
          const hasedPassword=await bcrypt.hash(password,salt)
@@ -59,7 +61,7 @@ export const signup=async (req, res) => {
             res.status(400).json({meassage:"Invalid User"})
          }
     } catch (error) {
-        console.log("Error in signup")
+        console.log("Error in signup",error)
         res.status(500).json({message:"Internal server error"})
     }
 
