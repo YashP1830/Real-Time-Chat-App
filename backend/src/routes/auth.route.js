@@ -8,7 +8,7 @@
  router.post('/signup',signup)
  router.post('/login',login);
  router.post('/logout',logout);
- router.post('/upadate-profile',protectRoute,updateprofile)
+ router.put('/upadate-profile',protectRoute,updateprofile)
 
  router.get("/check",protectRoute,(req,res)=> res.status(200).json(req.user))
  export default router

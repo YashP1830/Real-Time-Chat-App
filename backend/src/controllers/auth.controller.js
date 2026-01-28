@@ -101,17 +101,16 @@ export const signup=async (req, res) => {
         res.status(200).json({message:"The user is Logout Successfully"})
  }
 
- export const updateprofile=async (res,req)=>{
+ export const updateprofile=async (req,res)=>{
     try {
-        const {profilepic}=req.body
-        if(!profilepic) return res.status(400).json({message:"Profile pic is required"})
+        const {profilePic}=req.body
+        if(!profilePic) return res.status(400).json({message:"Profile pic is required"})
         
         const userId=req.user._id
-        const uploadResponse=await cloudinary.uploader(profilepic)
-
+        const uploadResponse=await cloudinary.uploader.upload(profilePic)
         const UpdatedUSER=await User.findByIdAndUpdate(userId,{profilepic:uploadResponse.secure_url},{new:true})
 
-        res.status(200).json(UpdatedUSER)
+        return res.status(200).json(UpdatedUSER)
 
     } catch (error) {
         console.error("Error in Profiel Updating controller",error)
