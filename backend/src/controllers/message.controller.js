@@ -1,4 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
+import { io, getReceiverSocketId } from "../lib/socket.js";
 import Message from "../models/message.js";
 import { User } from "../models/User.js";
 
@@ -64,6 +65,12 @@ export const sendMessage=async (req,res)=>{
     })
 
     const savedMessage=await newMessage.save()
+
+    const receiverSocketId=getReceiverSocketId(receiverId)
+    if(receiverSocketId)
+    {
+        io.to(receiverSocketId).emit("newMessage",newMessage)
+    }
     return res.status(201).json(savedMessage)   
 }
 
