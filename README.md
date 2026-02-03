@@ -147,23 +147,3 @@ This project is licensed under the **MIT License**.
 
 ---
 
-## ⭐ Show Your Support
-
-If you like this project, don’t forget to **star ⭐ the repository**!
-
----
-
-### 🔥 Pro tip (resume line you can use)
-
-> *Built a full-stack real-time chat application using MERN stack and Socket.IO with JWT-secured authentication and live messaging.*
-
----
-
-If you want, I can:
-
-* customize this README **exactly to your code**
-* add **badges (build, license, tech stack)**
-* make it **ATS / recruiter optimized**
-* write a **project description for resume**
-
-Just tell me 😄
